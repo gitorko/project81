@@ -1,10 +1,9 @@
 package com.demo.project81.controller;
 
-import java.time.LocalDateTime;
-
 import com.demo.project81.domain.Task;
 import com.demo.project81.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +15,18 @@ public class TaskController {
 
     final TaskService taskService;
 
+    @SneakyThrows
     @GetMapping("/task/queue")
     public Task queueMessage() {
+        String payload = """
+                {
+                    "name": "test",
+                    "city": "bangalore" 
+                }
+                """;
         Task task = Task.builder()
                 .topic("group1")
-                .payload("PAYLOAD_" + LocalDateTime.now())
+                .payload(payload)
                 .build();
         Task savedTask = taskService.queueTask(task);
         return savedTask;

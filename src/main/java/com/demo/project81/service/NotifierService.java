@@ -28,18 +28,18 @@ public class NotifierService {
 
     public Runnable createNotificationHandler(Consumer<PGNotification> consumer) {
         return () -> {
-            jdbcTemplate.execute((Connection c) -> {
+            jdbcTemplate.execute((Connection connection) -> {
                 log.info("notificationHandler: sending LISTEN command...");
-                c.createStatement().execute("LISTEN " + TASK_CHANNEL);
+                connection.createStatement().execute("LISTEN " + TASK_CHANNEL);
 
-                PGConnection pgconn = c.unwrap(PGConnection.class);
+                PGConnection pgConnection = connection.unwrap(PGConnection.class);
 
                 while (!Thread.currentThread().isInterrupted()) {
-                    PGNotification[] nts = pgconn.getNotifications(10000);
-                    if (nts == null || nts.length == 0) {
+                    PGNotification[] notifications = pgConnection.getNotifications(10000);
+                    if (notifications == null || notifications.length == 0) {
                         continue;
                     }
-                    for (PGNotification nt : nts) {
+                    for (PGNotification nt : notifications) {
                         consumer.accept(nt);
                     }
                 }

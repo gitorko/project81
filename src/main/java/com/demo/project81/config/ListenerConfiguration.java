@@ -17,7 +17,7 @@ public class ListenerConfiguration {
     CommandLineRunner startListener(NotifierService notifier, NotificationHandler handler) {
         return (args) -> {
             log.info("Starting task listener thread...");
-            Thread.ofVirtual().start(notifier.createNotificationHandler(handler));
+            Thread.ofVirtual().name("task-listener").start(notifier.createNotificationHandler(handler));
         };
     }
 }

@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Queue",
+			"name": "Queue Task",
 			"request": {
 				"method": "GET",
 				"header": [],
