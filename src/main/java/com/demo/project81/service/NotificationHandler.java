@@ -1,6 +1,5 @@
 package com.demo.project81.service;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import com.demo.project81.domain.Task;
@@ -14,13 +13,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NotificationHandler implements Consumer<PGNotification> {
 
-    private final TaskService taskService;
+    final TaskService taskService;
 
     @Override
     public void accept(PGNotification t) {
         log.info("Notification received: pid={}, name={}, param={}", t.getPID(), t.getName(), t.getParameter());
-        Task order = taskService.findById(Long.valueOf(t.getParameter()));
-        log.info("Task {}", order);
+        Task task = taskService.findById(Long.valueOf(t.getParameter()));
+        log.info("Task {}", task);
     }
 
 }

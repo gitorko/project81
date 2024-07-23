@@ -17,17 +17,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class NotifierService {
 
-    private static final String TASK_CHANNEL = "tasks";
-    private final JdbcTemplate tpl;
+    static final String TASK_CHANNEL = "tasks";
+    final JdbcTemplate jdbcTemplate;
 
     @Transactional
     public void notifyTaskCreated(Task task) {
-        tpl.execute("NOTIFY " + TASK_CHANNEL + ", '" + task.getId() + "'");
+        log.info("Notifying task channel!");
+        jdbcTemplate.execute("NOTIFY " + TASK_CHANNEL + ", '" + task.getId() + "'");
     }
 
     public Runnable createNotificationHandler(Consumer<PGNotification> consumer) {
         return () -> {
-            tpl.execute((Connection c) -> {
+            jdbcTemplate.execute((Connection c) -> {
                 log.info("notificationHandler: sending LISTEN command...");
                 c.createStatement().execute("LISTEN " + TASK_CHANNEL);
 

@@ -13,16 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class ListenerConfiguration {
 
-    final NotificationHandler handler;
-    final NotifierService notifier;
-
     @Bean
-    CommandLineRunner startListener() {
+    CommandLineRunner startListener(NotifierService notifier, NotificationHandler handler) {
         return (args) -> {
             log.info("Starting task listener thread...");
-            Runnable listener = notifier.createNotificationHandler(handler);
-            Thread.ofVirtual().start(listener);
+            Thread.ofVirtual().start(notifier.createNotificationHandler(handler));
         };
     }
 }
-

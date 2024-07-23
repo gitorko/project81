@@ -2,7 +2,7 @@
 
 Message Queue - Postgres
 
-[https://gitorko.github.io/post/queue-postgres](https://gitorko.github.io/post/queue-postgres)
+[https://gitorko.github.io/post/message-queue-postgres](https://gitorko.github.io/post/message-queue-postgres)
 
 ### Version
 
@@ -34,6 +34,5 @@ To run the backend in dev mode.
 ```bash
 ./gradlew clean build
 ./gradlew bootRun
-
 ```
 

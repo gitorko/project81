@@ -24,6 +24,7 @@ spring:
     show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate.ddl-auto: none
+    open-in-view: false
   batch:
     jdbc:
       initialize-schema: never
